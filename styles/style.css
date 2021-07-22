@@ -1,0 +1,20 @@
+:root {
+  --main-clear-color: #05dbf2;
+  --main-dark-color: #010d17;
+}
+
+body {
+  background-color: var(--main-dark-color);
+}
+
+.text-main-clear {
+  color: var(--main-clear-color);
+}
+
+.border-main-clear {
+  border-color: var(--main-clear-color);
+}
+
+.bg-dark {
+  background-color: var(--main-dark-color);
+}
