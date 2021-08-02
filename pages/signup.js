@@ -22,6 +22,7 @@ function Signup() {
           className="text-black rounded p-2 mt-2"
           type="text"
           placeholder="Username"
+          required
         />
         <label>Email</label>
         <input
@@ -29,6 +30,14 @@ function Signup() {
           className="text-black rounded p-2 mt-2"
           type="email"
           placeholder="Email"
+          required
+        />
+        <label>Profile picture link (optional)</label>
+        <input
+          name="picture"
+          className="text-black rounded p-2 mt-2"
+          type="url"
+          placeholder="https://myimagelink.example"
         />
         <label>Password</label>
         <input
