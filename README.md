@@ -5,3 +5,4 @@ This is the client side for Briefly project
 ## To do
 
 - Everything
+  - Handle isLogged reactive variable
