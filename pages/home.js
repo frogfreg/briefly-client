@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useReactiveVar } from "@apollo/client";
+import { isLoggedVar } from "../cache";
 
 export default function Home() {
   const router = useRouter();
+  const isLogged = useReactiveVar(isLoggedVar);
 
   useEffect(() => {
-    console.dir(localStorage.getItem("token"));
-
-    if (!localStorage.getItem("token")) {
+    if (!isLogged) {
       router.push("/");
     }
-  }, [router]);
+  }, [isLogged, router]);
 
   return (
     <div>
