@@ -3,6 +3,7 @@ import { getCurrentDate } from "../utils";
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
 import { isLoggedVar } from "../cache";
+import Link from "next/link";
 
 const SIGN_UP = gql`
   mutation signUp(
@@ -41,6 +42,7 @@ function Signup() {
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", data.signUp);
+      isLoggedVar(true);
     }
   }, [data]);
 
@@ -146,9 +148,11 @@ function Signup() {
         </button>
         {error ? <p>{error.message}</p> : null}
 
-        <a href="#" className="hover:underline">
-          If you have an account, log in instead
-        </a>
+        <Link href="/login">
+          <a className="hover:underline">
+            If you have an account, log in instead
+          </a>
+        </Link>
       </form>
     </div>
   );
