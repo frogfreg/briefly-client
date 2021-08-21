@@ -18,3 +18,12 @@ body {
 .bg-dark {
   background-color: var(--main-dark-color);
 }
+
+.nav-element {
+  transition: all 0.3s ease-in-out;
+}
+.nav-element:hover,
+.nav-element:focus {
+  background-color: var(--main-clear-color);
+  color: var(--main-dark-color);
+}
