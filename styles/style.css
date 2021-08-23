@@ -27,3 +27,7 @@ body {
   background-color: var(--main-clear-color);
   color: var(--main-dark-color);
 }
+
+.min-48 {
+  min-width: 64px;
+}
