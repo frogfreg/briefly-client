@@ -1,6 +1,7 @@
 import SmallBrief from "./SmallBrief";
 
-export default function Feed(props) {
+export default function Feed({ briefs }) {
+  console.log(briefs);
   return (
     <div className="flex flex-col w-full h-full border border-white text-white overflow-y-auto">
       <form className="flex flex-col text-xl sticky top-0 bg-dark">
@@ -10,14 +11,14 @@ export default function Feed(props) {
           placeholder="Tell us what is on  your mind!"
         ></textarea>
       </form>
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
-      <SmallBrief />
+      {briefs.length === 0 ? (
+        <p className="text-lg text-center">
+          Not much to see here, go follow someone else
+        </p>
+      ) : null}
+      {briefs.map((briefData) => {
+        return <SmallBrief briefData={briefData} />;
+      })}
     </div>
   );
 }

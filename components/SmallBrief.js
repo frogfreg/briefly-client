@@ -1,4 +1,4 @@
-export default function SmallBrief() {
+export default function SmallBrief({ briefData }) {
   return (
     <article className="flex  border-t-2 border-main-clear py-2">
       <div className="w-1/5 flex flex-col items-center">
@@ -10,13 +10,13 @@ export default function SmallBrief() {
       </div>
       <div className="text-lg px-2">
         <p>
-          <b>@username</b>{" "}
+          <b>@{briefData.author.username}</b>{" "}
         </p>
-        <p>
-          Aute nisi id exercitation exercitation dolore elit aute.Sit ipsum qui
-          proident deserunt ex veniam elit voluptate elit enim.
-        </p>
-        <div>Favs and comments</div>
+        <p>{briefData.text}</p>
+        <div>
+          <button>Favs {briefData.favoriteCount}</button>{" "}
+          <button>Comments 0</button>
+        </div>
       </div>
     </article>
   );
