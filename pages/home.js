@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import MainLayout from "../components/MainLayout";
 import Feed from "../components/Feed";
 import Loader from "../components/Loader";
@@ -25,14 +25,13 @@ const GET_USER_FEED = gql`
 `;
 
 export default function Home() {
-  const { loading, error, data, refetch } = useQuery(GET_USER_FEED);
+  const [getUserFeed, { loading, data, error }] = useLazyQuery(GET_USER_FEED);
 
   useEffect(() => {
-    if (error) {
-      console.error(error);
-      refetch();
+    if (!data) {
+      getUserFeed();
     }
-  }, [data, error, refetch]);
+  }, [data, getUserFeed]);
 
   return (
     <>

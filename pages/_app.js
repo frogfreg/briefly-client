@@ -25,7 +25,7 @@ if (typeof window !== "undefined") {
     return {
       headers: {
         ...headers,
-        authorization: token || "null",
+        authorization: token ? `Bearer ${token}` : "null",
       },
     };
   });
