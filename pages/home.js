@@ -3,6 +3,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import MainLayout from "../components/MainLayout";
 import Feed from "../components/Feed";
 import Loader from "../components/Loader";
+import { refetchUserFeedVar } from "../cache";
 
 const GET_USER_FEED = gql`
   query getUserFeed {
@@ -28,7 +29,10 @@ const GET_USER_FEED = gql`
 `;
 
 export default function Home() {
-  const [getUserFeed, { loading, data, error }] = useLazyQuery(GET_USER_FEED);
+  const [getUserFeed, { loading, data, error, refetch: refetchUserFeed }] =
+    useLazyQuery(GET_USER_FEED);
+
+  refetchUserFeedVar(refetchUserFeed);
 
   useEffect(() => {
     if (!data) {
@@ -41,12 +45,7 @@ export default function Home() {
       <MainLayout>
         {loading ? <Loader /> : null}
         {error ? <p className="text-white">Something went wrong</p> : null}
-        {data ? (
-          <Feed
-            briefs={data.loggedInUser.feed}
-            favorites={data.loggedInUser.favorites}
-          />
-        ) : null}
+        {data ? <Feed briefsData={data.loggedInUser} /> : null}
       </MainLayout>
     </>
   );

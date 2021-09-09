@@ -1,8 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
-import { loggedUserFavoritesVar } from "../cache.js";
-//THIS COMPONENT NEEDS TO RERENDER WHEN TOGGLEFAVORITE IS UPDATED
+import { gql, useMutation } from "@apollo/client";
 
 const TOGGLE_FAVORITE = gql`
   mutation toggleFavorite($briefId: ID!) {
@@ -10,10 +8,10 @@ const TOGGLE_FAVORITE = gql`
   }
 `;
 
-export default function SmallBrief({ briefData }) {
+export default function SmallBrief({ briefData, faved }) {
   const [toggleFavorite, { error }] = useMutation(TOGGLE_FAVORITE);
-
-  const loggedUserFavorites = useReactiveVar(loggedUserFavoritesVar);
+  const [isFaved, setIsFaved] = useState(faved);
+  const [favoriteCount, setFavoriteCount] = useState(briefData.favoriteCount);
 
   useEffect(() => {
     if (error) {
@@ -21,14 +19,12 @@ export default function SmallBrief({ briefData }) {
       console.log(error);
     }
   }, [error]);
-  useEffect(() => {
-    console.dir(loggedUserFavorites);
-  }, [loggedUserFavorites]);
 
   function handleFavClick() {
-    console.log("Updating favorites");
     toggleFavorite({ variables: { briefId: briefData.briefId } });
-    console.log("Emptying favs");
+    const newCount = isFaved ? favoriteCount - 1 : favoriteCount + 1;
+    setIsFaved(!isFaved);
+    setFavoriteCount(newCount);
   }
 
   return (
@@ -58,15 +54,9 @@ export default function SmallBrief({ briefData }) {
           <button onClick={handleFavClick} className="mr-4">
             <img
               className="w-6 inline"
-              src={
-                loggedUserFavorites.find(
-                  (element) => element.briefId === briefData.briefId
-                )
-                  ? "/filled-heart.svg"
-                  : "/heart.svg"
-              }
+              src={isFaved ? "/filled-heart.svg" : "/heart.svg"}
             />{" "}
-            {briefData.favoriteCount}
+            {favoriteCount}
           </button>{" "}
           <button>
             <img className="w-6 inline" src="/comment-icon.svg" /> 0
