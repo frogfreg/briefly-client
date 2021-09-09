@@ -10,6 +10,7 @@ export default function Feed({ briefsData }) {
           placeholder="Tell us what is on  your mind!"
         ></textarea>
       </form>
+
       {briefsData.feed.length === 0 ? (
         <p className="text-lg text-center">
           Not much to see here, go follow someone else
