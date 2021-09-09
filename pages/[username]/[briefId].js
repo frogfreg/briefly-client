@@ -4,6 +4,7 @@ import MainLayout from "../../components/MainLayout";
 import { gql, useLazyQuery, useReactiveVar } from "@apollo/client";
 import Loader from "../../components/Loader";
 import { isLoggedVar } from "../../cache";
+import SmallBrief from "../../components/SmallBrief";
 
 const SINGLE_BRIEF_DATA = gql`
   query singleBriefData($briefId: ID!) {
@@ -66,8 +67,7 @@ export default function BriefPage() {
       if (!token) {
         router.push("/");
       }
-    }
-    if (isLogged && briefId && username) {
+    } else if (briefId && username) {
       getBriefData();
     }
   }, [briefId, username, getBriefData, isLogged, router]);
@@ -77,9 +77,9 @@ export default function BriefPage() {
       {loading ? <Loader /> : null}
       {error ? <p className="text-white">Something went wrong</p> : null}
       {data ? (
-        <p className="text-white">
-          this is the page for brief {briefId} and user {username}
-        </p>
+        <div className="text-white">
+          <SmallBrief briefData={data.brief} />
+        </div>
       ) : null}
     </MainLayout>
   );

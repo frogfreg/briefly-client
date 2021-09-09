@@ -5,6 +5,7 @@ This is the client side for Briefly project
 ## To do
 
 - Everything
-  - Add user page
-  - Add single brief view
+
+  - Create detailed view component
+  - Create detailed view list
   - Handle follows
