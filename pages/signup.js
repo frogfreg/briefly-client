@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import { getCurrentDate } from "../utils";
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
-import { isLoggedVar } from "../cache";
 import Link from "next/link";
 
 const SIGN_UP = gql`
@@ -26,25 +25,24 @@ const SIGN_UP = gql`
 function Signup() {
   const formRef = useRef(null);
   const router = useRouter();
-  const isLogged = useReactiveVar(isLoggedVar);
   const [confirmIsEqual, setConfirmIsEqual] = useState(true);
   const [createNewUser, { data, loading, error }] = useMutation(SIGN_UP, {
     errorPolicy: "all",
   });
 
-  //TODO: check reactive varible for redirection in all current pages and check error handling
-  useEffect(() => {
-    if (isLogged) {
-      router.push("/home");
-    }
-  }, [isLogged, router]);
-
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", data.signUp);
-      isLoggedVar(true);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/home");
+    }
+  });
+
+  //TODO: check reactive varible for redirection in all current pages and check error handling
 
   function handleSubmit(e) {
     e.preventDefault();

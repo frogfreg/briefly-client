@@ -1,6 +1,5 @@
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useRef, useEffect } from "react";
-import { isLoggedVar } from "../cache";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -11,25 +10,23 @@ const LOG_IN = gql`
 `;
 
 export default function Login() {
-  const isLogged = useReactiveVar(isLoggedVar);
-  const router = useRouter();
   const [logIn, { data, loading, error }] = useMutation(LOG_IN, {
     errorPolicy: "all",
   });
+  const router = useRouter();
   const formRef = useRef(null);
-
-  useEffect(() => {
-    if (isLogged) {
-      router.push("/home");
-    }
-  }, [isLogged, router]);
 
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", data.signIn);
-      isLoggedVar(true);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/home");
+    }
+  });
 
   function handleSubmit(e) {
     e.preventDefault();

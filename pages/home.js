@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { gql, useLazyQuery } from "@apollo/client";
 import MainLayout from "../components/MainLayout";
-import Feed from "../components/Feed";
+import { useRouter } from "next/router";
 import Loader from "../components/Loader";
-import { refetchUserFeedVar } from "../cache";
 
 const GET_USER_FEED = gql`
   query getUserFeed {
@@ -29,23 +28,20 @@ const GET_USER_FEED = gql`
 `;
 
 export default function Home() {
-  const [getUserFeed, { loading, data, error, refetch: refetchUserFeed }] =
-    useLazyQuery(GET_USER_FEED);
-
-  refetchUserFeedVar(refetchUserFeed);
+  const [getUserFeed, { loading, data, error }] = useLazyQuery(GET_USER_FEED);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!data) {
-      getUserFeed();
+    if (!localStorage.getItem("token")) {
+      router.push("/");
     }
-  }, [data, getUserFeed]);
+  });
 
   return (
     <>
       <MainLayout>
         {loading ? <Loader /> : null}
         {error ? <p className="text-white">Something went wrong</p> : null}
-        {data ? <Feed briefsData={data.loggedInUser} /> : null}
       </MainLayout>
     </>
   );

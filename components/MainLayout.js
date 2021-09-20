@@ -1,25 +1,6 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useReactiveVar } from "@apollo/client";
-import { isLoggedVar } from "../cache";
 import Link from "next/link";
 
-export default function MainLayout({ children, check = true }) {
-  const router = useRouter();
-  const isLogged = useReactiveVar(isLoggedVar);
-
-  useEffect(() => {
-    if (check) {
-      if (!isLogged) {
-        console.log(
-          "Inside main layout checking if user is Logged: " + isLogged
-        );
-        console.dir(router.query);
-        router.push("/");
-      }
-    }
-  }, [isLogged, router, check]);
-
+export default function MainLayout({ children }) {
   return (
     <div className="max-w-screen-xl grid grid-cols-4 mx-auto border-8 border-green-500 h-screen grid-rows-6 md:grid-rows-none">
       <div className="text-6xl text-white border-purple-800 border-8  row-start-6 md:row-start-1 md:col-span-1 col-span-4 bg-dark">

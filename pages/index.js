@@ -1,18 +1,15 @@
-import Landing from "../components/Landing";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useReactiveVar } from "@apollo/client";
-import { isLoggedVar } from "../cache";
+import Landing from "../components/Landing";
+import router, { useRouter } from "next/router";
 
-export default function Home() {
+export default function LandingPage() {
   const router = useRouter();
-  const isLogged = useReactiveVar(isLoggedVar);
 
   useEffect(() => {
-    if (isLogged) {
+    if (localStorage.getItem("token")) {
       router.push("/home");
     }
-  }, [isLogged, router]);
+  });
 
   return (
     <div>

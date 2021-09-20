@@ -7,8 +7,6 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { isLoggedVar } from "../cache";
-import { useEffect } from "react";
 
 //I kind of hate SSR
 
@@ -37,12 +35,6 @@ if (typeof window !== "undefined") {
 }
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      isLoggedVar(true);
-    }
-  }, []);
-
   if (typeof window !== "undefined") {
     return (
       <ApolloProvider client={client}>
