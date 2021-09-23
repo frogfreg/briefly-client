@@ -1,9 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { getCurrentDate } from "../utils";
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
-import { useRouter } from "next/router";
-import { isLoggedVar } from "../cache";
-import Link from "next/link";
+import { gql, useMutation } from "@apollo/client";
+import { Link, useHistory } from "react-router-dom";
 
 const SIGN_UP = gql`
   mutation signUp(
@@ -25,24 +23,22 @@ const SIGN_UP = gql`
 
 function Signup() {
   const formRef = useRef(null);
-  const router = useRouter();
-  const isLogged = useReactiveVar(isLoggedVar);
   const [confirmIsEqual, setConfirmIsEqual] = useState(true);
   const [createNewUser, { data, loading, error }] = useMutation(SIGN_UP, {
     errorPolicy: "all",
   });
+  const history = useHistory();
 
-  //TODO: check reactive varible for redirection in all current pages and check error handling
   useEffect(() => {
-    if (isLogged) {
-      router.push("/home");
+    if (localStorage.getItem("token")) {
+      history.push("/home");
     }
-  }, [isLogged, router]);
+  }, []);
 
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", data.signUp);
-      isLoggedVar(true);
+      history.push("/home");
     }
   }, [data]);
 
@@ -90,6 +86,8 @@ function Signup() {
           name="username"
           className="text-black rounded p-2 mt-2"
           type="text"
+          maxLength="30"
+          minLength="2"
           placeholder="Username"
           required
         />
@@ -148,10 +146,8 @@ function Signup() {
         </button>
         {error ? <p>{error.message}</p> : null}
 
-        <Link href="/login">
-          <a className="hover:underline">
-            If you have an account, log in instead
-          </a>
+        <Link to="/login" className="hover:underline">
+          If you have an account, log in instead
         </Link>
       </form>
     </div>

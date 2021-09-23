@@ -1,8 +1,6 @@
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
-import { useRef, useEffect } from "react";
-import { isLoggedVar } from "../cache";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { gql, useMutation } from "@apollo/client";
+import React, { useRef, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
 
 const LOG_IN = gql`
   mutation logIn($username: String, $email: String, $password: String!) {
@@ -11,23 +9,22 @@ const LOG_IN = gql`
 `;
 
 export default function Login() {
-  const isLogged = useReactiveVar(isLoggedVar);
-  const router = useRouter();
   const [logIn, { data, loading, error }] = useMutation(LOG_IN, {
     errorPolicy: "all",
   });
   const formRef = useRef(null);
+  const history = useHistory();
 
   useEffect(() => {
-    if (isLogged) {
-      router.push("/home");
+    if (localStorage.getItem("token")) {
+      history.push("home");
     }
-  }, [isLogged, router]);
+  }, []);
 
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", data.signIn);
-      isLoggedVar(true);
+      history.push("home");
     }
   }, [data]);
 
@@ -88,8 +85,8 @@ export default function Login() {
         </button>
         {error ? <p>{error.message}</p> : null}
 
-        <Link href="/signup">
-          <a className="hover:underline">Sign up instead</a>
+        <Link to="/signup" className="hover:underline">
+          Sign up instead
         </Link>
       </form>
     </div>
