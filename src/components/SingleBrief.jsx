@@ -6,6 +6,7 @@ import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { refetchFavoritesVar } from "../cache";
 import { formatDate } from "../utils";
 import { Link } from "react-router-dom";
+import stockProfile from "../assets/stock-profile.jpeg";
 
 const FAV = gql`
   mutation toggleFavorite($briefId: ID!) {
@@ -52,7 +53,9 @@ export default function SingleBrief({ briefData, faved }) {
         <img
           className="m-auto rounded-full w-14 max-h-full text-white text-base"
           alt="user profile picture"
-          src="https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={
+            briefData.author.picture ? briefData.author.picture : stockProfile
+          }
         />
       </div>
       <div className="w-3/4 text-white text-base">
