@@ -12,8 +12,8 @@ export default function MainLayout({ children }) {
           <Link to="/home" className="rounded-full p-4 nav-element">
             Home
           </Link>
-          <Link to="/#" className="rounded-full p-4 nav-element">
-            Explore
+          <Link to="/search" className="rounded-full p-4 nav-element">
+            Search
           </Link>
           <Link to="/#" className="rounded-full p-4 nav-element">
             Settings

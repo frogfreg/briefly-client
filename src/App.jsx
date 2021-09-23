@@ -15,6 +15,7 @@ import Landing from "./components/Landing";
 import Signup from "./components/Signup";
 import User from "./components/User";
 import Thread from "./components/Thread";
+import Search from "./components/Search";
 
 const GET_USER_FEED = gql`
   query getUserFeed {
@@ -87,6 +88,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Signup />
+        </Route>
+        <Route path="/search">
+          <Search />
         </Route>
         <Route path="/:username/:briefid">
           <Thread />
