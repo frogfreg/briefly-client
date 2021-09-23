@@ -1,21 +1,22 @@
-import Link from "next/link";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function MainLayout({ children }) {
   return (
     <div className="max-w-screen-xl grid grid-cols-4 mx-auto border-8 border-green-500 h-screen grid-rows-6 md:grid-rows-none">
       <div className="text-6xl text-white border-purple-800 border-8  row-start-6 md:row-start-1 md:col-span-1 col-span-4 bg-dark">
         <nav className="text-xl sm:text-3xl items-center md:items-stretch flex md:flex-col border-blue-400 border-4 justify-around h-full md:h-auto">
-          <Link href="/home">
-            <a className="my-4 hidden md:block">🦜Briefly</a>
+          <Link to="/home" className="my-4 hidden md:block">
+            🦜Briefly
           </Link>
-          <Link href="/home">
-            <a className="rounded-full p-4 nav-element">Home</a>
+          <Link to="/home" className="rounded-full p-4 nav-element">
+            Home
           </Link>
-          <Link href="/#">
-            <a className="rounded-full p-4 nav-element">Explore</a>
+          <Link to="/#" className="rounded-full p-4 nav-element">
+            Explore
           </Link>
-          <Link href="/#">
-            <a className="rounded-full p-4 nav-element">Settings</a>
+          <Link to="/#" className="rounded-full p-4 nav-element">
+            Settings
           </Link>
         </nav>
       </div>

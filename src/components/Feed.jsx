@@ -1,10 +1,11 @@
-import SingleBrief from "./singleBrief";
+import React from "react";
+import BriefForm from "./BriefForm";
+import SingleBrief from "./SingleBrief";
 
 export default function Feed({ userData }) {
-  console.dir(userData);
-
   return (
     <div className="flex flex-col border border-yellow-400 h-full overflow-y-auto">
+      <BriefForm />
       {userData.feed.map((brief) => {
         const faved = userData.favorites.find(
           (favBrief) => favBrief.briefId === brief.briefId

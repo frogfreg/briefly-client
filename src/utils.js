@@ -16,3 +16,10 @@ export function getCurrentDate() {
 
   return `${year}-${month}-${day}`;
 }
+
+export function formatDate(dateString) {
+  const date = new Date(+dateString);
+  const formattedDate = date.toDateString().slice(4);
+
+  return formattedDate;
+}
